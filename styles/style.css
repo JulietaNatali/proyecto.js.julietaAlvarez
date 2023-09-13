@@ -1,0 +1,20 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+}
+
+body {
+    background: rgb(127,56,175);
+    background: linear-gradient(90deg, rgba(127,56,175,1) 10%, rgba(253,29,29,1) 57%, rgba(231,77,191,1) 100%);
+}
+
+h1, h2, h3{
+    font-family: 'Montserrat', sans-serif;
+    color: white;
+    text-align: start;
+    margin: 15px;
+}
+
+
