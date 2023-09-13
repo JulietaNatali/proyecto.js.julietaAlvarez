@@ -7,7 +7,7 @@ saludar ();
 
 let total = 0;
 let productos = 0;
-let respuesta = prompt("¿Quieres cargar productos vendidos?");
+let respuesta = prompt("¿Quieres cargar productos vendidos? (SI/NO)");
 
 while (respuesta.toUpperCase() === "SI") {
   let producto = prompt("Ingrese el nombre del producto:");
