@@ -1,12 +1,42 @@
-function saludar () {
+class Producto {
+  constructor(nombre, precio) {
+    this.nombre = nombre;
+    this.precio = precio;
+  }
+}
+
+class ListaDeProductos {
+  constructor() {
+    this.productos = [];
+  }
+
+  agregarProducto(nombre, precio) {
+    const producto = new Producto(nombre, precio);
+    this.productos.push(producto);
+  }
+
+  mostrarListado() {
+    let listado = "Listado de Productos:\n";
+    this.productos.forEach((producto, index) => {
+      listado += `${index + 1}. Nombre: ${producto.nombre}, Precio: ${producto.precio}\n`;
+    });
+
+    alert(listado);
+  }
+
+  calcularTotal() {
+    return this.productos.reduce((total, producto) => total + producto.precio, 0);
+  }
+}
+
+function saludar() {
   let nombreVendedor = prompt("Ingresa tu nombre de vendedor!");
   alert("Bienvenido " + nombreVendedor + "!");
 }
 
-saludar ();
+saludar();
 
-let total = 0;
-let productos = 0;
+let productosVendidos = new ListaDeProductos();
 let respuesta = prompt("¿Quieres cargar productos vendidos? (SI/NO)");
 
 while (respuesta.toUpperCase() === "SI") {
@@ -14,8 +44,7 @@ while (respuesta.toUpperCase() === "SI") {
   let precio = parseFloat(prompt("Ingrese el precio del producto:"));
 
   if (!isNaN(precio)) {
-    total += precio;
-    productos++;
+    productosVendidos.agregarProducto(producto, precio);
   } else {
     alert("Por favor, ingrese un precio válido.");
   }
@@ -23,13 +52,15 @@ while (respuesta.toUpperCase() === "SI") {
   respuesta = prompt("¿Quieres cargar más productos vendidos? (SI/NO)");
 }
 
-if (productos > 0) {
+if (productosVendidos.productos.length > 0) {
   alert(
     "Has vendido " +
-      productos +
+      productosVendidos.productos.length +
       " productos por un total de $" +
-      total.toFixed(2)
+      productosVendidos.calcularTotal().toFixed(2)
   );
+
+  productosVendidos.mostrarListado();
 } else {
   alert("No se han registrado ventas. Hasta la próxima.");
 }
