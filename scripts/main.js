@@ -1,66 +1,68 @@
 class Producto {
   constructor(nombre, precio) {
-    this.nombre = nombre;
-    this.precio = precio;
+      this.nombre = nombre;
+      this.precio = precio;
   }
 }
 
 class ListaDeProductos {
   constructor() {
-    this.productos = [];
+      this.productos = this.obtenerProductosGuardados() || [];
   }
 
   agregarProducto(nombre, precio) {
-    const producto = new Producto(nombre, precio);
-    this.productos.push(producto);
+      const producto = new Producto(nombre, precio);
+      this.productos.push(producto);
+      this.guardarProductos(); 
   }
 
   mostrarListado() {
-    let listado = "Listado de Productos:\n";
-    this.productos.forEach((producto, index) => {
-      listado += `${index + 1}. Nombre: ${producto.nombre}, Precio: ${producto.precio}\n`;
-    });
+      let listado = "Listado de Productos:\n";
+      this.productos.forEach((producto, index) => {
+          listado += `${index + 1}. Nombre: ${producto.nombre}, Precio: $${producto.precio.toFixed(2)}\n`;
+      });
 
-    alert(listado);
+      document.getElementById("productosList").textContent = listado;
   }
 
   calcularTotal() {
-    return this.productos.reduce((total, producto) => total + producto.precio, 0);
+      return this.productos.reduce((total, producto) => total + producto.precio, 0);
+  }
+
+  guardarProductos() {
+      localStorage.setItem("productosVendidos", JSON.stringify(this.productos));
+  }
+
+  obtenerProductosGuardados() {
+      const productosGuardados = localStorage.getItem("productosVendidos");
+      return productosGuardados ? JSON.parse(productosGuardados) : [];
   }
 }
 
-function saludar() {
-  let nombreVendedor = prompt("Ingresa tu nombre de vendedor!");
-  alert("Bienvenido " + nombreVendedor + "!");
-}
+const productosVendidos = new ListaDeProductos();
 
-saludar();
+document.getElementById("ventaForm").addEventListener("submit", function (e) {
+  e.preventDefault();
 
-let productosVendidos = new ListaDeProductos();
-let respuesta = prompt("¿Quieres cargar productos vendidos? (SI/NO)");
+  const productoNombre = document.getElementById("productoNombre").value;
+  const productoPrecio = parseFloat(document.getElementById("productoPrecio").value);
 
-while (respuesta.toUpperCase() === "SI") {
-  let producto = prompt("Ingrese el nombre del producto:");
-  let precio = parseFloat(prompt("Ingrese el precio del producto:"));
+  if (!isNaN(productoPrecio)) {
+      productosVendidos.agregarProducto(productoNombre, productoPrecio);
+      productosVendidos.mostrarListado();
+      document.getElementById("totalVentas").textContent = `$${productosVendidos.calcularTotal().toFixed(2)}`;
 
-  if (!isNaN(precio)) {
-    productosVendidos.agregarProducto(producto, precio);
+      document.getElementById("productoNombre").value = "";
+      document.getElementById("productoPrecio").value = "";
   } else {
-    alert("Por favor, ingrese un precio válido.");
+      alert("Por favor, ingrese un precio válido.");
   }
+});
 
-  respuesta = prompt("¿Quieres cargar más productos vendidos? (SI/NO)");
-}
-
-if (productosVendidos.productos.length > 0) {
-  alert(
-    "Has vendido " +
-      productosVendidos.productos.length +
-      " productos por un total de $" +
-      productosVendidos.calcularTotal().toFixed(2)
-  );
-
+document.getElementById("limpiarVentas").addEventListener("click", function () {
+  productosVendidos.productos = [];
   productosVendidos.mostrarListado();
-} else {
-  alert("No se han registrado ventas. Hasta la próxima.");
-}
+  document.getElementById("totalVentas").textContent = "$0.00";
+  localStorage.removeItem("productosVendidos");
+});
+

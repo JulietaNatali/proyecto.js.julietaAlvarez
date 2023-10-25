@@ -10,7 +10,7 @@ body {
     background: linear-gradient(90deg, rgba(127,56,175,1) 10%, rgba(253,29,29,1) 57%, rgba(231,77,191,1) 100%);
 }
 
-h1, h2, h3{
+h1, h2, h3, form{
     font-family: 'Montserrat', sans-serif;
     color: white;
     text-align: start;

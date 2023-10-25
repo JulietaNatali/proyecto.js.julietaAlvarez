@@ -3,16 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Js 47060</title>
+    <title>Registro de Ventas</title>
     <link rel="stylesheet" href="styles/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h1>Segunda pre entrega JavaScript </h1>
-    <h2>Julieta Alvarez</h2>
-    <h3>Controlador de Ventas</h3>
+    <h1>Registro de Ventas</h1>
+    
+    <form id="ventaForm">
+        <label for="productoNombre">Nombre del producto:</label>
+        <input type="text" id="productoNombre" required>
+
+        <label for="productoPrecio">Precio del producto:</label>
+
+        <input type="number" id="productoPrecio" step="0.01" required>
+
+        <button type="submit">Agregar Producto</button>
+    </form>
+
+    <h2>Listado de Productos:</h2>
+    <pre id="productosList"></pre>
+    <button id="limpiarVentas">Limpiar</button>
+
+    <h3>Total de Ventas: <span id="totalVentas"></span></h3>
+    
     <script src="scripts/main.js"></script>
 </body>
 </html>
